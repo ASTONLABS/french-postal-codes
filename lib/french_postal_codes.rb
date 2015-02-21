@@ -7,6 +7,9 @@ class FrenchPostalCode
   # Gets cities belonging to specified postal code
   # Returns empty array if postal code isn't found
   def self.cities(postal_code)
+    postal_code = postal_code.to_s
+    return [] if postal_code.length < 2 # Path can't be constructed if length < 2
+
     path = @load_paths.find { |path| File.file?(build_file_path(path, postal_code)) }
     return [] if path.nil?
     YAML.load_file(build_file_path(path, postal_code))[:cities]
@@ -21,7 +24,6 @@ class FrenchPostalCode
 private
 
   def self.build_file_path(dir, postal_code)
-    postal_code = postal_code.to_s
     File.join(dir, postal_code[0..1], postal_code[2..-1]) + ".yml"
   end
 

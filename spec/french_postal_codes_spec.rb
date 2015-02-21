@@ -16,6 +16,10 @@ describe FrenchPostalCode do
       it "returns empty array if code doesn't exists" do
         expect(FrenchPostalCode.send(method, "nonexisting").count).to eq 0
       end
+
+      it "returns empty arraz if code is less than 2 chars long" do
+        expect(FrenchPostalCode.send(method, "1")).to eq []
+      end
     end
   end
 
